@@ -1,0 +1,169 @@
+<div class="accounts-page">
+  <!-- Üst başlık -->
+  <div class="accounts-header">
+    <h2>{{ ((bankName || '').toUpperCase() === 'MBANK') ? 'My Bank' : 'Vakıfbank' }} Hesaplarınız</h2>
+
+    <div class="header-actions">
+      <input
+        type="text"
+        placeholder="IBAN / Hesap No ara…"
+        [(ngModel)]="query"
+        class="search-input"
+      />
+      <button class="refresh-btn" (click)="fetchAccounts(bankName || '')">Yenile</button>
+    </div>
+  </div>
+
+  <!-- Yükleniyor -->
+  <div *ngIf="isLoading" class="state loading">
+    <div class="spinner"></div>
+    <p>Hesaplar yükleniyor…</p>
+  </div>
+
+  <!-- Hata -->
+  <div *ngIf="!isLoading && errorMessage" class="state error">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <!-- Boş -->
+  <div *ngIf="!isLoading && !errorMessage && filteredAccounts.length === 0" class="state empty">
+    <p>Görüntülenecek hesap bulunamadı.</p>
+  </div>
+
+  <!-- Banka tipine göre grid seçimi -->
+  <ng-container *ngIf="!isLoading && !errorMessage && filteredAccounts.length > 0">
+    <ng-container [ngSwitch]="(bankName || '').toUpperCase()">
+
+      <!-- =========================
+           VAKIFBANK GRID
+           ========================= -->
+      <div *ngSwitchCase="'VAKIFBANK'" class="card-grid">
+        <div *ngFor="let account of filteredAccounts" class="account-card">
+          <div class="card-top">
+            <span class="pill type" [class.other]="account.accountType !== '2'">
+              {{ account.accountType === '2' ? 'Vadesiz Hesap' : 'Diğer Hesap' }}
+            </span>
+            <span
+              class="pill status"
+              [class.active]="account.accountStatus === 'A'"
+              [class.passive]="account.accountStatus !== 'A'">
+              {{ account.accountStatus === 'A' ? 'Aktif' : 'Pasif' }}
+            </span>
+          </div>
+
+          <div class="balance">
+            <div class="amount">
+              {{ account.balance | number:'1.2-2' }}
+              <span class="ccy">{{ account.currencyCode }}</span>
+            </div>
+          </div>
+
+          <div class="meta">
+            <div class="row">
+              <span class="label">IBAN</span>
+              <span class="value truncate">{{ account.iban }}</span>
+              <button class="icon-btn" (click)="copy(account.iban)" title="Kopyala">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                  <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 18H8V7h11v16z"/>
+                </svg>
+              </button>
+            </div>
+
+            <div class="row">
+              <span class="label">Hesap No</span>
+              <span class="value">{{ account.accountNumber }}</span>
+              <button class="icon-btn" (click)="copy(account.accountNumber)" title="Kopyala">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                  <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 18H8V7h11v16z"/>
+                </svg>
+              </button>
+            </div>
+
+            <div class="row">
+              <span class="label">Son İşlem</span>
+              <span class="value">{{ account.lastTransactionDate | date:'dd.MM.yyyy HH:mm' }}</span>
+            </div>
+          </div>
+
+          <div class="card-actions">
+            <!-- VAKIFBANK: transactions param = accountNumber -->
+            <button class="btn ghost"
+                    [routerLink]="['/transactions', 'VAKIFBANK', account.accountNumber]">
+              Hareketler
+            </button>
+
+            <!-- VAKIFBANK: detail param = accountNumber -->
+            <button class="btn ghost"
+                    [routerLink]="['/account-detail', 'VAKIFBANK', account.accountNumber]">
+              Hesap Detay
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- =========================
+           MBANK / MYBANK GRID
+           ========================= -->
+      <div *ngSwitchCase="'MBANK'" class="card-grid">
+        <div *ngFor="let account of filteredAccounts" class="account-card">
+          <div class="card-top">
+            <span class="pill type other">My Bank</span>
+          </div>
+
+          <div class="balance">
+            <div class="amount">
+              {{ account.balance | number:'1.2-2' }}
+              <span class="ccy">{{ account.currencyCode }}</span>
+            </div>
+          </div>
+
+          <div class="meta">
+            <div class="row">
+              <span class="label">Hesap Adı</span>
+              <span class="value">{{ account.accountName }}</span>
+            </div>
+
+            <div class="row">
+              <span class="label">IBAN</span>
+              <span class="value truncate">{{ account.iban }}</span>
+              <button class="icon-btn" (click)="copy(account.iban)" title="Kopyala">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                  <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 18H8V7h11v16z"/>
+                </svg>
+              </button>
+            </div>
+
+            <div class="row">
+              <span class="label">Hesap No</span>
+              <span class="value">{{ account.accountNumber }}</span>
+              <button class="icon-btn" (click)="copy(account.accountNumber)" title="Kopyala">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                  <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 18H8V7h11v16z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="card-actions">
+            <!-- MBANK: transactions param = id -->
+            <button class="btn ghost"
+                    [routerLink]="['/transactions', 'MBANK', account.id]">
+              Hareketler
+            </button>
+
+            <!-- MBANK: detail param = IBAN -->
+            <button class="btn ghost"
+                    [routerLink]="['/account-detail', 'MBANK', account.iban]">
+              Hesap Detay
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Desteklenmeyen banka -->
+      <div *ngSwitchDefault class="state error">
+        Desteklenmeyen banka adı.
+      </div>
+    </ng-container>
+  </ng-container>
+</div>

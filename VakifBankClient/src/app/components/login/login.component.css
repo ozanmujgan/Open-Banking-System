@@ -1,0 +1,69 @@
+
+
+.login-container {
+  display: flex;
+  flex-direction: column; /* Öğeleri dikeyde sırala */
+  align-items: center; /* Yatayda ortala */
+  width: 100%; /* Sayfanın tamamını kaplaması için */
+  /* max-width kaldırıldı */
+  margin: 0; /* Margin kaldırıldı */
+  padding: 0; /* Padding kaldırıldı, çünkü header ve card kendi padding'ini yönetecek */
+  box-sizing: border-box;
+  /* Tüm sayfa içeriğini üstten başlatmak için, body flex ayarlandığında bu ayar gerekliydi. Şimdi body'den kaldırıldığı için buraya eklenecek */
+  min-height: 100vh; /* login-container'ın viewport yüksekliğini kaplamasını sağlar */
+}
+
+/* Başlık stili - login.component.css'e taşındı */
+.header-band {
+  background-color: var(--vakifbank-primary-orange);
+  color: var(--vakifbank-light-text);
+  padding: 15px 0;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 30px; /* Giriş kutusu ile arasında boşluk */
+  width: 100%; /* Genişliği kaplasın */
+  box-shadow: var(--vakifbank-box-shadow);
+  border-bottom-left-radius: var(--vakifbank-border-radius);
+  border-bottom-right-radius: var(--vakifbank-border-radius);
+}
+
+.login-card {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: var(--vakifbank-border-radius);
+  box-shadow: var(--vakifbank-box-shadow);
+  width: 100%;
+  max-width: 400px; /* Login kartının maksimum genişliğini belirleriz */
+  text-align: center;
+  margin: 30px auto; /* Üstten ve alttan boşluk verip yatayda ortala */
+  /* margin-top: -30px; kaldırıldı, artık üstte bağımsız bir header var */
+  position: relative;
+  z-index: 1;
+}
+
+.login-card h2 {
+  color: var(--vakifbank-dark-text);
+  margin-bottom: 25px;
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: var(--vakifbank-dark-text);
+  font-size: 14px;
+}
+
+.register-link {
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--vakifbank-dark-text);
+}

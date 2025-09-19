@@ -1,0 +1,6 @@
+@VakifbankApi_HostAddress = http://localhost:5231
+
+GET {{VakifbankApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

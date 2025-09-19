@@ -1,0 +1,22 @@
+<!-- src/app/components/register/register.component.html -->
+<div class="auth-card">
+  <h2>Hesap Oluştur</h2>
+
+  <div *ngIf="info" class="alert info">{{ info }}</div>
+  <div *ngIf="error" class="alert error">{{ error }}</div>
+
+  <label>Kullanıcı Adı</label>
+  <input type="text" [(ngModel)]="username" />
+
+  <label>Şifre (6 karakter)</label>
+  <input type="password" [(ngModel)]="password" maxlength="6" />
+
+  <label>Şifre (Tekrar)</label>
+  <input type="password" [(ngModel)]="confirm" maxlength="6" />
+
+  <button [disabled]="isLoading" (click)="submit()">
+    {{ isLoading ? 'Kaydediliyor…' : 'Kayıt Ol' }}
+  </button>
+
+  <a routerLink="/login" class="muted">Zaten hesabın var mı? Giriş yap</a>
+</div>

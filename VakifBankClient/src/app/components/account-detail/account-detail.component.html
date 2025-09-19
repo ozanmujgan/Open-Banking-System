@@ -1,0 +1,89 @@
+<div class="account-detail-container">
+  <h2>Hesap Detayları</h2>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="state loading">
+    <p>Hesap detayları yükleniyor...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="!isLoading && errorMessage" class="state error">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <!-- Card -->
+  <div *ngIf="!isLoading && !errorMessage && accountDetail" class="detail-card">
+    <!-- Header -->
+    <div class="card-header" [style.backgroundColor]="'#fdb913'">
+      <div class="balance">
+        <span class="amount">{{ accountDetail.balance | number:'1.2-2' }}</span>
+        <span class="currency">{{ accountDetail.currencyCode }}</span>
+      </div>
+
+      <!-- Sağdaki etiket -->
+      <div class="account-type">
+        <ng-container *ngIf="isMyBank(); else vbType">
+          My Bank
+        </ng-container>
+        <ng-template #vbType>
+          {{ accountDetail.accountType === '2' ? 'Vadesiz Hesap' : 'Diğer Hesap' }}
+        </ng-template>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Body: MBANK (MyBank) alanları -->
+    <div class="card-body" *ngIf="isMyBank(); else vakifbankRows">
+      <div class="detail-row" *ngIf="accountDetail.accountName">
+        <span class="label">Hesap Adı:</span>
+        <span class="value">{{ accountDetail.accountName }}</span>
+      </div>
+
+      <div class="detail-row">
+        <span class="label">Hesap Numarası:</span>
+        <span class="value">{{ accountDetail.accountNumber }}</span>
+      </div>
+
+      <div class="detail-row">
+        <span class="label">IBAN:</span>
+        <span class="value">{{ accountDetail.iban }}</span>
+      </div>
+    </div>
+
+    <!-- Body: VAKIFBANK alanları -->
+    <ng-template #vakifbankRows>
+      <div class="card-body">
+        <div class="detail-row">
+          <span class="label">Hesap Numarası:</span>
+          <span class="value">{{ accountDetail.accountNumber }}</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="label">IBAN:</span>
+          <span class="value">{{ accountDetail.iban }}</span>
+        </div>
+
+        <div class="detail-row" *ngIf="accountDetail.lastTransactionDate">
+          <span class="label">Son İşlem Tarihi:</span>
+          <span class="value">{{ accountDetail.lastTransactionDate | date:'dd.MM.yyyy HH:mm' }}</span>
+        </div>
+
+        <div class="detail-row" *ngIf="accountDetail.branchCode">
+          <span class="label">Şube Kodu:</span>
+          <span class="value">{{ accountDetail.branchCode }}</span>
+        </div>
+
+        <div class="detail-row" *ngIf="accountDetail.customerNumber">
+          <span class="label">Müşteri Numarası:</span>
+          <span class="value">{{ accountDetail.customerNumber }}</span>
+        </div>
+
+        <div class="detail-row" *ngIf="accountDetail.openingDate">
+          <span class="label">Açılış Tarihi:</span>
+          <span class="value">{{ accountDetail.openingDate | date:'dd.MM.yyyy' }}</span>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

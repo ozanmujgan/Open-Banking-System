@@ -1,0 +1,92 @@
+<div class="transactions-container">
+  <div class="header">
+    <a [routerLink]="['/account-list', bankName]" class="back-button" aria-label="Geri dön">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+        <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+      </svg>
+    </a>
+    <h2>Hesap Hareketleri</h2>
+
+    <span *ngIf="bankName === 'VAKIFBANK' && accountNumber" class="account-number-display">
+      Hesap No: {{ accountNumber }}
+    </span>
+    <span *ngIf="bankName === 'MBANK' && bankAccountId != null" class="account-number-display">
+      Hesap Id: {{ bankAccountId }}
+    </span>
+  </div>
+
+  <!-- Hızlı süre butonları + seçilen aralık -->
+  <div class="filter-section">
+    <div class="range-chips">
+      <button
+        *ngFor="let r of presetRanges"
+        class="chip"
+        [class.active]="activeRangeKey === r.key"
+        [disabled]="isLoading"
+        (click)="applyRange(r.key)">
+        {{ r.label }}
+      </button>
+    </div>
+    <div class="range-label">
+      <span>{{ displayStart }}</span>
+      <span class="date-separator">–</span>
+      <span>{{ displayEnd }}</span>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="state-message loading">
+    <div class="spinner"></div>
+    <p>Hesap hareketleri yükleniyor…</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="!isLoading && errorMessage" class="state-message error">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <!-- Empty -->
+  <div *ngIf="!isLoading && !errorMessage && bankName==='VAKIFBANK' && vakifTxns.length===0" class="state-message empty">
+    <p>Seçilen tarih aralığında hareket bulunamadı.</p>
+  </div>
+  <div *ngIf="!isLoading && !errorMessage && bankName==='MBANK' && mybankTxns.length===0" class="state-message empty">
+    <p>Seçilen tarih aralığında hareket bulunamadı.</p>
+  </div>
+
+  <!-- List: VAKIFBANK -->
+  <div *ngIf="!isLoading && !errorMessage && bankName === 'VAKIFBANK' && vakifTxns.length > 0" class="transaction-list">
+    <div *ngFor="let t of vakifTxns" class="transaction-card">
+      <div class="card-left">
+        <span class="description">{{ t.description }}</span>
+        <span class="date-time">{{ t.transactionDate | date:'dd.MM.yyyy HH:mm:ss' }}</span>
+      </div>
+      <div class="card-right">
+        <span class="amount"
+              [class.positive]="t.transactionType === '1' || t.transactionType === 'CR'"
+              [class.negative]="t.transactionType === '2' || t.transactionType === 'DR'">
+          {{ (t.transactionType === '1' || t.transactionType === 'CR') ? '+' : '-' }}
+          {{ t.amount | number:'1.2-2' }} {{ t.currencyCode }}
+        </span>
+        <span class="ref-number">Ref: {{ t.transactionId }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- List: MBANK -->
+  <div *ngIf="!isLoading && !errorMessage && bankName === 'MBANK' && mybankTxns.length > 0" class="transaction-list">
+    <div *ngFor="let t of mybankTxns" class="transaction-card">
+      <div class="card-left">
+        <span class="description">{{ t.description }}</span>
+        <span class="date-time">{{ t.transactionDate | date:'dd.MM.yyyy HH:mm:ss' }}</span>
+      </div>
+      <div class="card-right">
+        <span class="amount"
+              [class.positive]="t.amount > 0"
+              [class.negative]="t.amount < 0">
+          {{ t.amount | number:'1.2-2' }}
+        </span>
+        <span class="ref-number">{{ t.transactionType }}</span>
+      </div>
+    </div>
+  </div>
+</div>

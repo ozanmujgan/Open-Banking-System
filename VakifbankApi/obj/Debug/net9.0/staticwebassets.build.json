@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "RxAYkGNk+8CeplXjHNxO5DXd3PHivMuPM6JJyu1QU4E=",
+  "Source": "VakifbankApi",
+  "BasePath": "_content/VakifbankApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

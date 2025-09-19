@@ -1,0 +1,93 @@
+.account-detail-container {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.state {
+  text-align: center;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.loading {
+  background-color: #e6f7ff;
+  color: #007bff;
+}
+
+.error {
+  background-color: #fff0f0;
+  color: #d9534f;
+  border: 1px solid #d9534f;
+}
+
+.detail-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.card-header {
+  background-color: #fbd913; /* turuncu */
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header .balance {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header .balance .amount {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.card-header .balance .currency {
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+
+.card-header .account-type {
+  background-color: #f1f1f1;
+  color: #000;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row .label {
+  font-weight: bold;
+  color: #555;
+}
+
+.detail-row .value {
+  color: #333;
+  text-align: right;
+}

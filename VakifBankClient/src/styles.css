@@ -1,0 +1,95 @@
+/* src/styles.css */
+
+/* Vakıfbank Teması Renk Paleti */
+:root {
+  --vakifbank-primary-orange: #fdb913; /* Ana turuncu */
+  --vakifbank-dark-orange: #FFA500;  /* Buton hover rengi */
+  --vakifbank-light-gray: #f2f2f2; /* Arka plan rengi */
+  --vakifbank-medium-gray: #e0e0e0; /* Border ve gölge tonları için */
+  --vakifbank-dark-text: #333333; /* Ana metin rengi */
+  --vakifbank-light-text: #ffffff; /* Beyaz metin */
+  --vakifbank-border-radius: 5px;
+  --vakifbank-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--vakifbank-light-gray); /* Tüm sayfa arka planı */
+  color: var(--vakifbank-dark-text);
+  min-height: 100vh; /* Sayfanın tamamını kaplasın */
+
+}
+
+/* Genel input ve buton stilleri */
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid var(--vakifbank-medium-gray);
+  border-radius: var(--vakifbank-border-radius);
+  box-sizing: border-box;
+}
+
+button {
+  background-color: var(--vakifbank-primary-orange);
+  color: var(--vakifbank-light-text);
+  border: none;
+  padding: 12px 20px;
+  border-radius: var(--vakifbank-border-radius);
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--vakifbank-dark-orange);
+}
+
+a {
+  color: var(--vakifbank-primary-orange);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--vakifbank-dark-orange);
+  text-decoration: underline;
+}
+
+/* Hata mesajı stili */
+.error-message {
+  color: #dc3545;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  border-radius: var(--vakifbank-border-radius);
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 14px;
+}
+/* Global rahatlık */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; overflow-x: hidden; background:#f5f7fb; }
+
+/* Fluid tipografi */
+h1, h2, h3 { line-height: 1.2; margin: 0 0 .75rem; }
+h2 { font-size: clamp(1.2rem, 1.6vw + .8rem, 1.8rem); }
+
+/* Uzun stringler (IBAN vs) taşmasın */
+.truncate, .value, .item {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+/* Çok uzun kelimeler kırılabilsin (gerekirse) */
+.break-anywhere {
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}

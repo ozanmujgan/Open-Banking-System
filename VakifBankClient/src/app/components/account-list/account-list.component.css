@@ -1,0 +1,196 @@
+:root {
+  --bg: #f5f7fb;
+  --card: #fdb913;
+  --ink: #0f172a;
+  --muted: #6b7280;
+  --line: #e5e7eb;
+  --brand: #2563eb;
+  --ok: #10b981;
+  --danger: #ef4444;
+  --ring: rgba(37, 99, 235, .15);
+}
+
+* { box-sizing: border-box; }
+
+.accounts-page {
+  min-height: 100vh;
+  padding: 24px;
+  background:
+    radial-gradient(1200px 400px at 20% -10%, #eef2ff 0%, transparent 60%),
+    radial-gradient(800px 300px at 100% 0%, #ecfeff 0%, transparent 60%),
+    var(--bg);
+}
+
+/* Header */
+.accounts-header {
+  max-width: 1200px;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.accounts-header h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--ink);
+}
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+.search-input {
+  width: 280px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  outline: none;
+}
+.search-input:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 6px var(--ring);
+}
+.refresh-btn {
+  padding: 10px 1px;
+  border-radius: 12px;
+  border: none;
+  background: #fdb913 !important;   /* ana turuncu */
+  color: #fff;           /* yazı beyaz */
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.refresh-btn:hover {
+  background: #e6a500;   /* hover’da biraz koyu turuncu */
+}
+
+
+/* State blocks */
+.state {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 24px;
+  border-radius: 16px;
+  background: #fff;
+  border: 1px dashed var(--line);
+  color: var(--muted);
+  display: flex; align-items: center; gap: 12px; justify-content: center;
+}
+.state.error {
+  border-color: #fecaca; color: #b91c1c; background: #fff1f2;
+}
+.spinner {
+  width: 28px; height: 28px;
+  border: 3px solid rgba(0,0,0,.08);
+  border-top-color: var(--brand);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Grid of cards */
+.card-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+/* Card */
+.account-card {
+  background: #fdb913 !important;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: 0 10px 24px -12px rgba(210, 86, 86, 0.2);
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.account-card:hover {
+  transform: translateY(-2px);
+  border-color: #e4fec7;
+  box-shadow: 0 18px 32px -10px rgba(37,99,235,.18);
+}
+
+/* Top line */
+.card-top {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 12px;
+}
+.pill {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  border: 1px solid var(--line);
+  background: #f8fafc;
+}
+.pill.type.other { background: #fff7ed; border-color: #fed7aa; color: #9a3412; }
+.pill.status.active { background: #ecfdf5; border-color: #bbf7d0; color: #065f46; }
+.pill.status.passive { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
+
+/* Balance */
+.balance {
+  margin: 8px 0 14px;
+}
+.amount {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: .2px;
+}
+.amount .ccy {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+  margin-left: 6px;
+}
+
+/* Meta rows */
+.meta { display: grid; gap: 8px; margin-top: 8px; }
+.row {
+  display: grid;
+  grid-template-columns: 110px 1fr auto;
+  align-items: center;
+  gap: 8px;
+}
+.label { color: var(--muted); font-size: 12px; }
+.value { color: #111827; font-weight: 600; }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.link {
+  border: none; background: transparent; color: var(--brand);
+  cursor: pointer; font-size: 12px; padding: 4px 6px; border-radius: 8px;
+}
+.link:hover { background: #eff6ff; }
+
+/* Actions */
+.card-actions {
+  margin-top: 14px;
+  display: flex; gap: 8px; justify-content: flex-end;
+}
+.btn {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn.ghost {
+  background: #e19200;     /* siyah arka plan */
+  color: #fff;          /* beyaz yazı */
+  border-color: #000;   /* siyah kenarlık */
+}
+
+.btn.ghost:hover {
+  background: #333;     /* hover’da koyu gri */
+  border-color: #333;
+}
+.btn.primary {
+  background: var(--brand);
+  color: #fff;
+  border-color: var(--brand);
+}
+.btn.primary:hover { filter: brightness(0.95); }

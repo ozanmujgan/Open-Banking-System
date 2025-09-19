@@ -1,0 +1,55 @@
+<!-- src/app/components/dashboard/dashboard.component.html -->
+<div class="dashboard-container">
+  <div class="header-band">
+    <span class="user-info">
+      >> Hesaplarım
+      <span *ngIf="fullName" class="welcome-text">Merhaba, {{ fullName }}</span>
+    </span>
+    <span class="header-title">VAKIFBANK AÇIK BANKACILIK</span>
+    <button class="logout-button" (click)="logout()" aria-label="Çıkış yap">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+        <path d="M16 13v-2H8V7l-5 5 5 5v-4h8zm3-10H11a2 2 0 0 0-2 2v3h2V5h8v14h-8v-3H9v3a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/>
+      </svg>
+      <span>Çıkış</span>
+    </button>
+  </div>
+
+  <div class="content-wrapper">
+    <div class="bank-accounts-section" *ngIf="isMainDashboard">
+
+      <!-- showAddOnly = false → normal kartlar -->
+      <ng-container *ngIf="!showAddOnly; else addOnly">
+        <div class="bank-card vakifbank-card">
+          <div class="bank-name-wrapper">
+            <span class="bank-name">VAKIFBANK</span>
+          </div>
+          <div class="envelope-image"></div>
+          <button class="view-details-button" [routerLink]="['/account-list/VAKIFBANK']">Bilgileri gör</button>
+        </div>
+
+        <div class="bank-card mybank-card">
+          <div class="bank-name-wrapper">
+            <span class="bank-name">MBANK</span>
+          </div>
+          <div class="envelope-image"></div>
+          <button class="view-details-button" [routerLink]="['/account-list/MBANK']">Bilgileri gör</button>
+        </div>
+
+        <div class="add-account-card">
+          <div class="plus-icon">+</div>
+          <div class="add-account-text">YENİ HESAP EKLE</div>
+        </div>
+      </ng-container>
+
+      <!-- showAddOnly = true → sadece "Yeni Hesap Ekle" -->
+      <ng-template #addOnly>
+        <div class="add-account-card">
+          <div class="plus-icon">+</div>
+          <div class="add-account-text">YENİ HESAP EKLE</div>
+        </div>
+      </ng-template>
+    </div>
+
+    <router-outlet *ngIf="!isMainDashboard"></router-outlet>
+  </div>
+</div>
